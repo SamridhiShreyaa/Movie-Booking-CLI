@@ -47,14 +47,14 @@ void PrintMenu()
 
 int isValidNumber(char n[])
 {
-    for(int i = 0; i< 10; i++)
+    for(int i = 0; i < strlen(n); i++)
     {
-        if(char n[i]-'0' != 48 && char n[i]-'0' != 57)
+        if(n[i] < '0' || n[i] > '9')  
         {
-            return 0;
-            break;
+            return 0; 
         }
     }
+    return 1; 
 }
 void InputDetails()
 {
@@ -77,9 +77,13 @@ void InputDetails()
     {
         printf("   >>> Enter mobile number: ");
         scanf("%s", dynamic_array[count].mobile);
-        getchar();
+        getchar(); 
+        if(strlen(dynamic_array[count].mobile) != 10 || !isValidNumber(dynamic_array[count].mobile))
+        {
+            printf("Invalid mobile number! Please enter a valid 10-digit mobile number.\n");
+        }
     }
-    while(strlen(dynamic_array[count].mobile) != 10 && !isValidNumber(dynamic_array[count].mobile) );
+    while(strlen(dynamic_array[count].mobile) != 10 || !isValidNumber(dynamic_array[count].mobile));
     count++;
 }
 
@@ -128,6 +132,7 @@ void ReadCSVAndUpdateSeats(const char *filename, Theatre *theatre, char *moviena
 }
 void Book()
 {
+    printf("\n=========== Shows Available ===========\n");
     printf("   >>> Enter your first or last name: ");
     char search[50];
     scanf("%s", search);
@@ -135,13 +140,19 @@ void Book()
     {
         if (strstr(dynamic_array[i].name, search) != NULL)
         {
-            printf("   Which Movie would you like to watch:\n");
-            printf("   \t(1) Dune 2\n");
-            printf("   \t(2) Transformers One\n");
-            printf("   \t(3) Oppenheimer\n");
-            printf("   \t(4) Inception\n");
-            printf("   \t(5) Tenet\n");
-            printf("   >>>");
+                printf("\033[1;36m");
+                printf("   ╔════════════════════════════════════════════════════════════╗\n");
+                printf("   ║                                                            ║\n");
+                printf("   ║  Which Movie would you like to watch:                      ║\n");
+                printf("   ║                                                            ║\n");
+                printf("   ║    (1) Dune 2                                              ║\n");
+                printf("   ║    (2) Transformers One                                    ║\n");
+                printf("   ║    (3) Oppenheimer                                         ║\n");
+                printf("   ║    (4) Inception                                           ║\n");
+                printf("   ║    (5) Tenet                                               ║\n");
+                printf("   ║                                                            ║\n");
+                printf("   ╚════════════════════════════════════════════════════════════╝\n");
+                printf("\033[1;36m");
             int n;
             scanf("%d", &n);
             char movie_chosen[50];
@@ -559,6 +570,7 @@ void Book()
 
 void GenerateBill()
 {
+    printf("\n=========== Bill For Selected Show ===========\n");
     printf("   >>> Enter first or last name: ");
     char search[50];
     scanf("%s", search);
@@ -651,7 +663,6 @@ int main()
                break;
            }
        }
-
        free(dynamic_array);
        return 0;
 
